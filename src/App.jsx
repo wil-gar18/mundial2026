@@ -11,23 +11,43 @@ import Login from './pages/Login';
 import './index.css';
 
 const PAGES = [
-  { id: 'horarios',   label: 'Horarios',    icon: '📅', component: Horarios },
-  { id: 'resultados', label: 'Resultados',  icon: '📊', component: Resultados },
-  { id: 'grupos',     label: 'Grupos',      icon: '🌍', component: Grupos },
-  { id: 'simulador',  label: 'Simulador',   icon: '🏆', component: Simulador },
-  { id: 'apuestas',   label: 'Apuestas',    icon: '💰', component: Apuestas },
-  { id: 'config',     label: 'Config',      icon: '⚙️', component: Configuracion },
+  { id: 'horarios',   label: 'Horarios',   icon: '📅', component: Horarios },
+  { id: 'resultados', label: 'Resultados', icon: '📊', component: Resultados },
+  { id: 'grupos',     label: 'Grupos',     icon: '🌍', component: Grupos },
+  { id: 'simulador',  label: 'Simulador',  icon: '🏆', component: Simulador },
+  { id: 'apuestas',   label: 'Apuestas',   icon: '💰', component: Apuestas },
+  { id: 'config',     label: 'Config',     icon: '⚙️', component: Configuracion },
 ];
 
 function Shell({ user, onLogout }) {
   const [page, setPage] = useState('horarios');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { betStats } = useApp();
   const CurrentPage = PAGES.find(p => p.id === page)?.component || Horarios;
 
+  const navigate = (id) => {
+    setPage(id);
+    setSidebarOpen(false);
+  };
+
   return (
     <div className="app-shell">
-      {/* Sidebar desktop */}
-      <aside className="sidebar">
+      {/* Overlay oscuro al abrir sidebar en móvil */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed', inset: 0,
+            background: 'rgba(0,0,0,0.6)',
+            zIndex: 150,
+            display: 'none',
+          }}
+          className="sidebar-overlay"
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-logo">
           <h1>MUNDIAL<br />2026</h1>
           <span>Mexico · Canada · USA</span>
@@ -37,7 +57,7 @@ function Shell({ user, onLogout }) {
             <button
               key={p.id}
               className={`nav-item ${page === p.id ? 'active' : ''}`}
-              onClick={() => setPage(p.id)}
+              onClick={() => navigate(p.id)}
             >
               {p.icon} {p.label}
               {p.id === 'apuestas' && betStats.pending > 0 && (
@@ -68,33 +88,24 @@ function Shell({ user, onLogout }) {
 
       {/* Contenido principal */}
       <main className="main-content">
+        {/* Header móvil */}
+        <div className="mobile-header">
+          <button
+            className="hamburger"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            {sidebarOpen ? '✕' : '☰'}
+          </button>
+          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, color: 'var(--gold)', letterSpacing: 2 }}>
+            MUNDIAL 2026
+          </span>
+          <span style={{ fontSize: 12, color: 'var(--text3)' }}>
+            {PAGES.find(p => p.id === page)?.icon}
+          </span>
+        </div>
+
         <CurrentPage />
       </main>
-
-      {/* Menú móvil */}
-      <nav className="mobile-nav">
-        <div className="mobile-nav-inner">
-          {PAGES.map(p => (
-            <button
-              key={p.id}
-              className={`mobile-nav-item ${page === p.id ? 'active' : ''}`}
-              onClick={() => setPage(p.id)}
-            >
-              <span className="icon">{p.icon}</span>
-              {p.label}
-              {p.id === 'apuestas' && betStats.pending > 0 && (
-                <span style={{
-                  background: 'var(--gold)', color: '#1a1000',
-                  fontSize: 9, fontWeight: 700, borderRadius: 10,
-                  padding: '1px 5px', marginTop: -2,
-                }}>
-                  {betStats.pending}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </nav>
     </div>
   );
 }
