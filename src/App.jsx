@@ -11,12 +11,12 @@ import Login from './pages/Login';
 import './index.css';
 
 const PAGES = [
-  { id: 'horarios',   label: '📅 Horarios',     component: Horarios },
-  { id: 'resultados', label: '📊 Resultados',    component: Resultados },
-  { id: 'grupos',     label: '🌍 Grupos',        component: Grupos },
-  { id: 'simulador',  label: '🏆 Simulador',     component: Simulador },
-  { id: 'apuestas',   label: '💰 Apuestas',      component: Apuestas },
-  { id: 'config',     label: '⚙️ Config',        component: Configuracion },
+  { id: 'horarios',   label: 'Horarios',    icon: '📅', component: Horarios },
+  { id: 'resultados', label: 'Resultados',  icon: '📊', component: Resultados },
+  { id: 'grupos',     label: 'Grupos',      icon: '🌍', component: Grupos },
+  { id: 'simulador',  label: 'Simulador',   icon: '🏆', component: Simulador },
+  { id: 'apuestas',   label: 'Apuestas',    icon: '💰', component: Apuestas },
+  { id: 'config',     label: 'Config',      icon: '⚙️', component: Configuracion },
 ];
 
 function Shell({ user, onLogout }) {
@@ -26,6 +26,7 @@ function Shell({ user, onLogout }) {
 
   return (
     <div className="app-shell">
+      {/* Sidebar desktop */}
       <aside className="sidebar">
         <div className="sidebar-logo">
           <h1>MUNDIAL<br />2026</h1>
@@ -38,7 +39,7 @@ function Shell({ user, onLogout }) {
               className={`nav-item ${page === p.id ? 'active' : ''}`}
               onClick={() => setPage(p.id)}
             >
-              {p.label}
+              {p.icon} {p.label}
               {p.id === 'apuestas' && betStats.pending > 0 && (
                 <span style={{
                   marginLeft: 'auto', background: 'var(--gold)',
@@ -64,9 +65,36 @@ function Shell({ user, onLogout }) {
           </button>
         </div>
       </aside>
+
+      {/* Contenido principal */}
       <main className="main-content">
         <CurrentPage />
       </main>
+
+      {/* Menú móvil */}
+      <nav className="mobile-nav">
+        <div className="mobile-nav-inner">
+          {PAGES.map(p => (
+            <button
+              key={p.id}
+              className={`mobile-nav-item ${page === p.id ? 'active' : ''}`}
+              onClick={() => setPage(p.id)}
+            >
+              <span className="icon">{p.icon}</span>
+              {p.label}
+              {p.id === 'apuestas' && betStats.pending > 0 && (
+                <span style={{
+                  background: 'var(--gold)', color: '#1a1000',
+                  fontSize: 9, fontWeight: 700, borderRadius: 10,
+                  padding: '1px 5px', marginTop: -2,
+                }}>
+                  {betStats.pending}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </nav>
     </div>
   );
 }
