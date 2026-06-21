@@ -3,7 +3,6 @@ import { Calendar, MapPin, Clock, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { FLAGS } from '../data/matches';
 import ReactCountryFlag from "react-country-flag";
-import Flag from '../components/Flag';
 
 const GROUP_COLORS = {
   A:'#C9A84C', B:'#4ADE80', C:'#60A5FA', D:'#F87171',
@@ -109,13 +108,21 @@ export default function Horarios() {
 
               <div className="match-teams">
                 <span className="match-flag">
-                  <Flag code={FLAGS[m.home]} size={20} />
+                  <ReactCountryFlag 
+                    countryCode={FLAGS[m.home]} 
+                    svg 
+                    style={{ width: '20px', height: '15px', objectFit: 'cover' }} 
+                  />
                 </span>
                 <span>{m.home}</span>
                 <span className="match-vs">vs</span>
                 <span>{m.away}</span>
                 <span className="match-flag">
-                  <Flag code={FLAGS[m.away]} size={20} />
+                  <ReactCountryFlag 
+                    countryCode={FLAGS[m.away]} 
+                    svg 
+                    style={{ width: '20px', height: '15px', objectFit: 'cover' }} 
+                  />
                 </span>
               </div>
 
