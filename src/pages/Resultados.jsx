@@ -1,6 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useApp } from '../context/AppContext';
 import { FLAGS } from '../data/matches';
+import { useState, useMemo } from 'react';
+import { useApp } from '../context/AppContext';
+import { FLAGS } from '../data/matches';
+import Flag from '../components/Flag';
 
 const GROUP_COLORS = {
   A:'#C9A84C', B:'#4ADE80', C:'#60A5FA', D:'#F87171',
@@ -34,7 +38,7 @@ function StandingsTable({ group, standings }) {
             }}>
               <td style={{ padding: '8px 8px', color: i < 2 ? '#4ADE80' : i === 2 ? 'var(--gold)' : 'var(--text3)', fontWeight: 700 }}>{i + 1}</td>
               <td style={{ padding: '8px 8px', fontWeight: 500 }}>
-                <span style={{ marginRight: 6 }}>{FLAGS[t.team] || '🏳'}</span>{t.team}
+                <span style={{ marginRight: 6 }}><Flag code={FLAGS[t.team]} size={22} /></span>{t.team}
               </td>
               <td style={{ padding: '8px 8px', textAlign: 'center', color: 'var(--text2)' }}>{t.pj}</td>
               <td style={{ padding: '8px 8px', textAlign: 'center', color: '#4ADE80' }}>{t.pg}</td>
@@ -82,7 +86,7 @@ function MatchRow({ match, result, onSave, onDelete }) {
       background: result ? 'rgba(13,122,62,0.04)' : 'transparent',
     }}>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
-        <span>{FLAGS[match.home] || '🏳'}</span>
+        <span><Flag code={FLAGS[match.home]} size={22} /></span>
         <span style={{ fontWeight: 500 }}>{match.home}</span>
       </div>
 
@@ -119,7 +123,7 @@ function MatchRow({ match, result, onSave, onDelete }) {
 
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, justifyContent: 'flex-end' }}>
         <span style={{ fontWeight: 500 }}>{match.away}</span>
-        <span>{FLAGS[match.away] || '🏳'}</span>
+        <span><Flag code={FLAGS[match.away]} size={22} /></span>
       </div>
 
       <div style={{ display: 'flex', gap: 4, marginLeft: 8, flexShrink: 0 }}>

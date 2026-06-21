@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Trophy, RefreshCw, ChevronRight } from 'lucide-react';
 import { GROUPS, FLAGS } from '../data/matches';
+import { useState } from 'react';
+import { Trophy, RefreshCw, ChevronRight } from 'lucide-react';
+import { GROUPS, FLAGS } from '../data/matches';
+import Flag from '../components/Flag';
+
 
 const INITIAL_SEMIS = [
   { id: 'sf1', home: 'Brasil',     away: 'Argentina', label: 'Semifinal 1' },
@@ -93,13 +98,13 @@ export default function Simulador() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <div style={{ flex: 1, textAlign: 'center' }}>
-                      <div style={{ fontSize: 22, marginBottom: 4 }}>{FLAGS[m.home] || '🏳'}</div>
+                      <div style={{ fontSize: 22, marginBottom: 4 }}><Flag code={FLAGS[m.home]} size={28} /></div>
                       <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8 }}>{m.home}</div>
                       <ScoreInput value={hScore} onChange={val => setScore(`${m.id}-h`, val)} />
                     </div>
                     <div style={{ fontSize: 18, color: 'var(--text3)' }}>—</div>
                     <div style={{ flex: 1, textAlign: 'center' }}>
-                      <div style={{ fontSize: 22, marginBottom: 4 }}>{FLAGS[m.away] || '🏳'}</div>
+                      <div style={{ fontSize: 22, marginBottom: 4 }}><Flag code={FLAGS[m.away]} size={28} /></div>
                       <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 8 }}>{m.away}</div>
                       <ScoreInput value={aScore} onChange={val => setScore(`${m.id}-a`, val)} />
                     </div>
@@ -147,7 +152,7 @@ export default function Simulador() {
                 Campeón Mundial 2026 — Tu predicción
               </div>
               <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--gold-light)', fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 2 }}>
-                {FLAGS[champion.split(' (')[0]] || '🏳'} {champion}
+                <Flag code={FLAGS[champion.split(' (')[0]]} size={36} /> {champion}
               </div>
             </div>
           )}
@@ -180,7 +185,8 @@ export default function Simulador() {
                   </div>
                   {m.home && m.away && (
                     <div style={{ marginTop: 8, fontSize: 12, color: result === 'Empate' ? 'var(--gold)' : '#4ADE80' }}>
-                      {result === 'Empate' ? '🤝 Empate' : `✅ Gana: ${FLAGS[result] || ''} ${result}`}
+                      {result === 'Empate' ? '🤝 Empate' : `✅ Gana: $<Flag code={FLAGS[result]} size={28} />
+`}
                     </div>
                   )}
                 </div>
