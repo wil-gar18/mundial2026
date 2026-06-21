@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { Trophy, RefreshCw, ChevronRight } from 'lucide-react';
 import { GROUPS, FLAGS } from '../data/matches';
-import { useState } from 'react';
-import { Trophy, RefreshCw, ChevronRight } from 'lucide-react';
-import { GROUPS, FLAGS } from '../data/matches';
 import Flag from '../components/Flag';
-
 
 const INITIAL_SEMIS = [
   { id: 'sf1', home: 'Brasil',     away: 'Argentina', label: 'Semifinal 1' },
