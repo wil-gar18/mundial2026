@@ -106,7 +106,9 @@ export default function Horarios() {
               </span>
 
               <div className="match-teams">
-                <span className="match-flag"><Flag code={FLAGS[m.home]} size={20} />
+                <span className="match-flag">
+                  <Flag code={FLAGS[m.home]} size={20} />
+                </span>
                 <span>{m.home}</span>
                 <span className="match-vs">vs</span>
                 <span>{m.away}</span>
