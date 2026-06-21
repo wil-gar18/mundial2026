@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Calendar, MapPin, Clock, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { FLAGS } from '../data/matches';
+import Flag from 'react-world-flags';
 
 const GROUP_COLORS = {
   A:'#C9A84C', B:'#4ADE80', C:'#60A5FA', D:'#F87171',
