@@ -1,4 +1,5 @@
 import { GROUPS, FLAGS } from '../data/matches';
+import ReactCountryFlag from "react-country-flag";
 
 const GROUP_COLORS = {
   A:'#C9A84C', B:'#4ADE80', C:'#60A5FA', D:'#F87171',
@@ -38,7 +39,13 @@ export default function Grupos() {
                   padding: '8px 10px', background: 'var(--bg3)',
                   borderRadius: 6, fontSize: 13,
                 }}>
-                  <span style={{ fontSize: 20, lineHeight: 1 }}><Flag code={FLAGS[team]} size={22} /></span>
+                  <span style={{ display: 'flex', alignItems: 'center' }}>
+                    <ReactCountryFlag 
+                      countryCode={FLAGS[team]} 
+                      svg 
+                      style={{ width: '22px', height: '16px', objectFit: 'cover' }} 
+                    />
+                  </span>
                   <span style={{ fontWeight: 500 }}>{team}</span>
                   {i === 0 && (
                     <span className="badge badge-gold" style={{ marginLeft: 'auto', fontSize: 10 }}>Cabeza</span>
